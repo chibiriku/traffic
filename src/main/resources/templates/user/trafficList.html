@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+			<thead>
+				<tr>
+					<th>ゆーざーID</th>
+					<th>手段</th>
+				</tr>
+			</thead>
+			<tbody th:each="item : ${tlist}" th:object="${item}">
+				<td><span th:text="*{userid}"></span></td>
+	            <td><span th:text="*{means}"></span></td>
+			</tbody>
+		</table>
+</body>
+</html>

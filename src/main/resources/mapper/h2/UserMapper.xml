@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.UserMapper">
+
+	<resultMap id="userWithTraffic" type="com.example.entity.Users">
+	    <id property="id" column="id" />
+	    <result property="name" column="name" />
+	    <!-- Usersエンティティの他のフィールドについても同様にマッピングを追加 -->
+	
+	    <!-- trafficListフィールドのカスタムマッピング -->
+	    <collection property="trafficList" ofType="com.example.entity.Traffic">
+	        <result property="userid" column="userid" />
+	        <result property="useday" column="useday" />
+	        <result property="means" column="means" />
+	        <result property="secter" column="secter" />
+	        <result property="road" column="road" />
+	        <result property="cost" column="cost" />
+	    </collection>
+	</resultMap>
+
+	<!-- ユーザーの登録 -->
+	<insert id="userAdd">
+		insert into USERS
+			(name, password, mail, createDate)
+		VALUES
+			(#{name}, #{password}, #{mail}, CURRENT_TIMESTAMP)
+	</insert>
+	
+	<!-- 社員一覧 -->
+	<select id="userList" resultType="com.example.entity.Users">
+		SELECT * FROM USERS
+	</select>
+	
+	<select id="trafficList" parameterType="int" resultMap="userWithTraffic">
+	    SELECT USERS.id, USERS.name, TRAFFIC.userid,
+	           TRAFFIC.useday, TRAFFIC.means, TRAFFIC.secter, TRAFFIC.road, TRAFFIC.cost
+	    FROM USERS 
+	    LEFT JOIN TRAFFIC  ON USERS.id = TRAFFIC.userid
+	    WHERE USERS.id = #{id}
+	</select>
+</mapper>

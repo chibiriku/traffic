@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" th:action="@{/rpc/traffic/insert}" th:object="${form}">
+		<input type="text" th:field="*{useday}" placeholder="yyyymmdd">
+		<input type="text" th:field="*{means}" placeholder="手段">
+		<input type="text" th:field="*{secter}" placeholder="区間">
+		<input type="text" th:field="*{road}" placeholder="往復片道">
+		<input type="text" th:field="*{cost}" placeholder="費用">
+		<input type="submit" value="登録">
+	</form>
+
+</body>
+</html>

@@ -31,6 +31,7 @@
 		SELECT * FROM USERS
 	</select>
 	
+	<!-- ユーザーごとの交通費 -->
 	<select id="trafficList" parameterType="int" resultMap="userWithTraffic">
 	    SELECT USERS.id, USERS.name, TRAFFIC.userid,
 	           TRAFFIC.useday, TRAFFIC.means, TRAFFIC.secter, TRAFFIC.road, TRAFFIC.cost
@@ -38,4 +39,8 @@
 	    LEFT JOIN TRAFFIC  ON USERS.id = TRAFFIC.userid
 	    WHERE USERS.id = #{id}
 	</select>
-</mapper>
+	
+	<select id="findLoginUser" resultType="com.example.entity.Users">
+		SELECT * FROM USERS WHERE mail = #{mail}
+	</select>
+ </mapper>

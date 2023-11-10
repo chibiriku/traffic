@@ -11,6 +11,7 @@ public class Users {
 	private String name;
 	private String password;
 	private String mail;
+	private String role;
 	private Date createDate;
 	private Date updateDate;
 	private Date deleteDate;

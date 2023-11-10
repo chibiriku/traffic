@@ -1,15 +1,12 @@
-package com.example.repository;
+package com.example.service;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.example.entity.Users;
 import com.example.form.UserAddForm;
 
-@Mapper
-public interface UserMapper {
-
+public interface UserService {
+	
 	void userAdd(UserAddForm form);
 
 	List<Users> userList();
@@ -17,5 +14,6 @@ public interface UserMapper {
 	List <Users> trafficList(int id);
 	
 	Users findLoginUser(String name);
+
 
 }

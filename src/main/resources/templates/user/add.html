@@ -9,6 +9,7 @@
 		<input type="text" th:field="*{name}" placeholder="名前">
 		<input type="text" th:field="*{mail}" placeholder="メールアドレス">
 		<input type="text" th:field="*{password}" placeholder="パスワード">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<input type="submit" value="登録">
 	</form>
 

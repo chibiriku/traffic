@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form method="post" th:action="@{/rpc/add}" th:object="${form}">
+		<input type="text" th:field="*{name}" placeholder="名前">
+		<input type="text" th:field="*{mail}" placeholder="メールアドレス">
+		<input type="text" th:field="*{password}" placeholder="パスワード">
+		<input type="submit" value="登録">
+	</form>
+
+</body>
+</html>

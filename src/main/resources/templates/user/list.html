@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>名前</th>
+					<th>メールアドレス</th>
+				</tr>
+			</thead>
+			<tbody th:each="item : ${list}" th:object="${item}">
+				<td><a th:href="@{/rpc/{id}(id=${item.id})}" th:text="*{name}"></a></td>
+	            <td><span th:text="*{mail}"></span></td>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

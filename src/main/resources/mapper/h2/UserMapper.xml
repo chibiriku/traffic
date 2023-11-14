@@ -43,4 +43,22 @@
 	<select id="findLoginUser" resultType="com.example.entity.Users">
 		SELECT * FROM USERS WHERE mail = #{mail}
 	</select>
+	
+	<!-- 今月の交通費一覧 -->
+	<select id="currentTrafficList" parameterType="Long" resultMap="userWithTraffic">
+	    SELECT USERS.id, USERS.name, TRAFFIC.userid,
+	           TRAFFIC.useday, TRAFFIC.means, TRAFFIC.secter, TRAFFIC.road, TRAFFIC.cost
+	    FROM USERS 
+	    LEFT JOIN TRAFFIC  ON USERS.id = TRAFFIC.userid
+	    WHERE USERS.id = #{id} AND YEAR(TRAFFIC.useday) = YEAR(CURDATE()) AND MONTH(TRAFFIC.useday) = MONTH(CURDATE());
+	</select>
+	
+	<!-- 月ごとの交通費リスト -->
+		<select id="monthlyTrafficList" parameterType="int" resultMap="userWithTraffic">
+		    SELECT USERS.id, USERS.name, TRAFFIC.userid, TRAFFIC.useday, TRAFFIC.means, TRAFFIC.secter, TRAFFIC.road, TRAFFIC.cost
+		    FROM USERS 
+		    LEFT JOIN TRAFFIC ON USERS.id = TRAFFIC.userid
+		    WHERE USERS.id = #{id} AND YEAR(TRAFFIC.useday) = #{year} AND MONTH(TRAFFIC.useday) = #{month}
+		</select>
+	
  </mapper>

@@ -14,6 +14,14 @@ public interface UserService {
 	List <Users> trafficList(int id);
 	
 	Users findLoginUser(String name);
+	
+	String loginUserName();
+
+	Users loginUser();
+	
+	List <Users> currentTrafficList(Long id);
+	
+	List <Users> monthlyTrafficList(int id, int year,int manth);
 
 
 }

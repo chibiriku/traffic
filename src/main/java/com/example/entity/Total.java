@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Num {
+public class Total {
 	private Long id;
 	private Long userId;
 	private Date monthDate;

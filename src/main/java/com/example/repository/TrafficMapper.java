@@ -8,4 +8,5 @@ import com.example.form.TrafficInsertForm;
 public interface TrafficMapper {
 
 	void trafficInsert(TrafficInsertForm form);
+	
 }

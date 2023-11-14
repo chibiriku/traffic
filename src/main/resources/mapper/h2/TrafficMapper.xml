@@ -4,9 +4,9 @@
 
 	<insert id="trafficInsert">
 		insert into TRAFFIC
-			(useday, means, secter, road, cost)
+			(userId, useday, means, secter, road, cost)
 		VALUES
-			(#{useday}, #{means}, #{secter}, #{road}, #{cost})
+			(#{userId}, #{useday}, #{means}, #{secter}, #{road}, #{cost})
 	</insert>
 	
 	

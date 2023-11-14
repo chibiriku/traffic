@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.entity.Traffic;
 import com.example.entity.Users;
 import com.example.form.UserAddForm;
-import com.example.service.impl.UserServiceImple;
+import com.example.service.impl.UserServiceImpl;
 
 @Controller
 @RequestMapping("/rpc")
 public class UserController {
 
 	@Autowired
-	private UserServiceImple userServiceImpl;
+	private UserServiceImpl userServiceImpl;
 
 	//社員追加フォーム
 	@GetMapping("/add")

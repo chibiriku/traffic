@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:method="post" th:action="@{/rpc/traffic/detail}" th:object="${form}">
+		<input type="hidden" th:field="*{id}">
+		<input type="text" th:field="*{useday}">
+		<input type="text" th:field="*{means}">
+		<input type="text" th:field="*{secter}">
+		<input type="text" th:field="*{road}">
+		<input type="text" th:field="*{cost}">
+		<button type="submit" name="update">更新</button>
+		<button type="submit" name="delete">削除</button>
+	</form>
+
+</body>
+</html>

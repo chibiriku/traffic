@@ -15,7 +15,7 @@ public class Traffic {
 	private String secter;
 	private String road;
 	private Integer cost;
-	
+
 	public void setUseday(Date useday) {
         this.useday = useday;
     }

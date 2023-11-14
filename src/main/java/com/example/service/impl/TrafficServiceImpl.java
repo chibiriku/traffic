@@ -2,6 +2,7 @@ package com.example.service.impl;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class TrafficServiceImpl implements TrafficService {
 
 	@Autowired
 	private TrafficMapper trafficMapper;
-	
+
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 
@@ -29,31 +30,32 @@ public class TrafficServiceImpl implements TrafficService {
 	public void trafficInsert(TrafficInsertForm form) {
 		trafficMapper.trafficInsert(form);
 	}
-	
+
 	@Override
 	public Long getId() {
 		Users loginUser = userServiceImpl.loginUser();
 		Long id = loginUser.getId();
 		return id;
 	}
-	
+
 	//型変換List<Users>→List<traffic>
-		public List<Traffic> loginTrafficList(List<Users> userList) {
-			List<Traffic> tlist = new ArrayList<>();
-		    for (Users user : userList) {
-		        List<Traffic> userTrafficList = user.getTrafficList();
-		        if (userTrafficList != null) {
-		            tlist.addAll(user.getTrafficList());
-		        }
-		    }
-			return tlist;
-		}
-	
+	@Override
+	public List<Traffic> loginTrafficList(List<Users> userList) {
+		List<Traffic> tlist = new ArrayList<>();
+	    for (Users user : userList) {
+	        List<Traffic> userTrafficList = user.getTrafficList();
+	        if (userTrafficList != null) {
+	            tlist.addAll(user.getTrafficList());
+	        }
+	    }
+		return tlist;
+	}
+
 	//月ごとの交通費合計値一覧
 	@Override
 	public Map<YearMonth, Integer> calculateMonthlyCost(List<Traffic> trafficList){
 	    Map<YearMonth, Integer> monthlyCost = new HashMap<>();
-	    
+
 	    Map<YearMonth, List<Traffic>> groupedByMonth = trafficList.stream().collect(Collectors.groupingBy(traffic -> YearMonth.from(traffic.getUsedayAsLocalDate())));
 
 	    for (Map.Entry<YearMonth, List<Traffic>> entry : groupedByMonth.entrySet()) {
@@ -71,35 +73,55 @@ public class TrafficServiceImpl implements TrafficService {
 		List<Users> tlist = userServiceImpl.currentTrafficList(id);
 		return loginTrafficList(tlist);
 	}
-	
+
 	//月ごとの交通費リスト
 	@Override
 	public List<Traffic> monthlyTrafficList(int id,int year,int month) {
-		
+
 		return loginTrafficList(userServiceImpl.monthlyTrafficList(id, year, month));
-		
+
 	}
-	
+
 	//今月の合計
 	@Override
 	public int total(YearMonth month) {
-		
+
 		List<Traffic> trafficList = loginTrafficList(userServiceImpl.currentTrafficList(getId()));
 	    Map<YearMonth, Integer> monthlyCost = calculateMonthlyCost(trafficList);
-	    
+
 	    return monthlyCost.get(month);
 	}
-	
+
 	//月ごとの合計
 	@Override
 	public int monthlyTotal(int id, int year, int month) {
 		List<Traffic> monthlyTraffics = monthlyTrafficList(id, year, month);
 		int num = 0;
 		for (Traffic traffic : monthlyTraffics) {
-			num =+ traffic.getCost();
+			num = num + traffic.getCost();
 		}
 		return num;
 	}
+
+	@Override
+	public Traffic trafficOne(int id) {
+		return trafficMapper.trafficOne(id);
+	}
+
+	@Override
+	public void trafficUpdate(Long id,
+			Date useday,
+			String means,
+			String secter,
+			String road,
+			int cost) {
+		trafficMapper.trafficUpdate(id, useday, means, secter, road, cost);
+	}
 	
-	
+	@Override
+	public void trafficDelete(Long id) {
+		trafficMapper.trafficDelete(id);
+	}
+
+
 }

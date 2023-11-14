@@ -32,6 +32,7 @@
 			<tbody th:each="item : ${list}" th:object="${item}">
 				<td><span th:text="*{means}"></span></td>
 	            <td><span th:text="*{cost}"></span></td>
+	            <td><a th:href="@{/rpc/traffic/detail/{id}(id=*{id})}">編集</a></td>
 			</tbody>
 		</table>
 		<p th:text="${total}"></p>

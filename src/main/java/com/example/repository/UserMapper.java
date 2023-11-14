@@ -15,11 +15,11 @@ public interface UserMapper {
 	List<Users> userList();
 
 	List <Users> trafficList(int id);
-	
+
 	Users findLoginUser(String name);
-	
+
 	List <Users> currentTrafficList(Long id);
-	
+
 	List <Users> monthlyTrafficList(int id,int year,int month);
-	
+
 }

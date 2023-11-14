@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.repository.TrafficMapper">
 
+	
+	<resultMap id="trafficResultMap" type="com.example.entity.Traffic">
+	    <id property="id" column="trafficid" />
+	    <result property="userid" column="userid" />
+	    <result property="useday" column="useday" />
+	    <result property="means" column="means" />
+	    <result property="secter" column="secter" />
+	    <result property="road" column="road" />
+	    <result property="cost" column="cost" />
+	</resultMap>
+
 	<insert id="trafficInsert">
 		insert into TRAFFIC
 			(userId, useday, means, secter, road, cost)
@@ -9,6 +20,18 @@
 			(#{userId}, #{useday}, #{means}, #{secter}, #{road}, #{cost})
 	</insert>
 	
+	<select id="trafficOne" parameterType="int" resultType="com.example.entity.Traffic" resultMap="trafficResultMap">
+		SELECT * FROM TRAFFIC WHERE trafficid = #{id}
+	</select>
 	
+	<update id="trafficUpdate">
+		UPDATE TRAFFIC 
+		SET useday = #{useday}, means = #{means}, secter = #{secter}, road = #{road}, cost = #{cost}
+		WHERE trafficid = #{id}
+	</update>
+	
+	<delete id="trafficDelete" parameterType="Long">
+        DELETE FROM TRAFFIC WHERE trafficid = #{id}
+    </delete>
 
 </mapper>

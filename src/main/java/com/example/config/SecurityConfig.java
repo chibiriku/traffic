@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -24,8 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
+
+
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		web
@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception{
-		
+
 		//直リンク許可
 		http
 			.authorizeRequests()
@@ -51,25 +51,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login?error")
 				.usernameParameter("mail")
 				.passwordParameter("password")
-				.defaultSuccessUrl("/rpc/list", true));
-		
+				.defaultSuccessUrl("/rpc/traffic/list", true));
+
 		http
 			.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		        .logoutSuccessUrl("/login?logout");
-	
-		
-		
+
+
+
 		//.antMatchers("/rpc/add").hasAuthority("ROLE_ADMIN")
 		//CSRF対策を無効に設定
 		//http.csrf().disable();
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		
+
 		PasswordEncoder encoder = passwordEncoder();
-		/*		
+		/*
 		auth
 			.inMemoryAuthentication()
 				.withUser("user")
@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.password(encoder.encode("admin"))
 					.roles("ADMIN");
 		 */
-		
+
 		auth
 			.userDetailsService(userDetailsService)
 			.passwordEncoder(encoder);

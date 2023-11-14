@@ -4,6 +4,7 @@ import java.time.Year;
 import java.time.YearMonth;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.entity.Traffic;
 import com.example.form.TrafficInsertForm;
+import com.example.form.TrafficUpdateForm;
 import com.example.service.impl.TrafficServiceImpl;
 
 @Controller
@@ -23,6 +25,9 @@ public class TrafficController {
 
 	@Autowired
 	private TrafficServiceImpl trafficServiceImpl;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@GetMapping("/traffic/insert")
 	public String trafficInsertForm(Model model) {
@@ -37,8 +42,9 @@ public class TrafficController {
 		trafficServiceImpl.trafficInsert(form);
 		return "redirect:/rpc/traffic/insert";
 	}
-	
-	@GetMapping("traffic/list")
+
+	//今月の交通費一覧
+	@GetMapping("/traffic/list")
 	public String currentList(Model model) {
 		List <Traffic> currentList = trafficServiceImpl.currentTraffics();
 		YearMonth currentYearMonth = YearMonth.now();
@@ -47,7 +53,9 @@ public class TrafficController {
 		model.addAttribute("total", total);
 		return "traffic/list";
 	}
-	
+
+
+	//月別の交通費一覧
 	@GetMapping("traffic/{month}")
 	public String trafficList(@PathVariable int month ,Model model) {
 		Year currentYear = Year.now();
@@ -60,4 +68,26 @@ public class TrafficController {
 		return "traffic/list";
 	}
 
+	//交通費レコードの詳細
+	@GetMapping("/traffic/detail/{id}")
+	public String trafficDetail(@PathVariable int id, Model model, TrafficUpdateForm form) {
+		Traffic traffic = trafficServiceImpl.trafficOne(id);
+		form = modelMapper.map(traffic, TrafficUpdateForm.class);
+		model.addAttribute("form", form);
+		return "traffic/detail";
+	}
+
+	//更新処理
+	@PostMapping(value = "/traffic/detail", params = "update")
+	public String trafficUpdate(TrafficUpdateForm form, Model model) {
+		trafficServiceImpl.trafficUpdate(form.getId(),form.getUseday(),form.getMeans(),form.getSecter(),form.getRoad(),form.getCost());
+		return "redirect:/rpc/traffic/list";
+	}
+	
+	//削除処理
+	@PostMapping(value = "/traffic/detail", params = "delete")
+	public String trafficDelete(TrafficUpdateForm form, Model model) {
+		trafficServiceImpl.trafficDelete(form.getId());
+		return "redirect:/rpc/traffic/list";
+	}
 }

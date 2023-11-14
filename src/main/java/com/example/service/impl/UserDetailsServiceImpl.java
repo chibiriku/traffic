@@ -16,28 +16,28 @@ import com.example.service.UserService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-		
+
 		Users loginUser = service.findLoginUser(mail);
-		
+
 		if(loginUser == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
-		
+
 		String role = loginUser.getRole();
-		
+
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		
+
 		if("2".equals(role)) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		}
-		
-		
+
+
 		return new org.springframework.security.core.userdetails.User(
 	            loginUser.getMail(),
 	            loginUser.getPassword(),

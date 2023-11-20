@@ -30,7 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception{
 		web
 			.ignoring()
-				.antMatchers("/h2-console/**");
+				.antMatchers("/h2-console/**")
+				.antMatchers("/webjars/**")
+				.antMatchers("/css/**")
+				.antMatchers("/js/**");
 	}
 
 	@Override
@@ -41,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/rpc/login").permitAll()
 				.antMatchers("/rpc/test").permitAll()
-				.antMatchers("/admin").hasAuthority("ROLE_ADMIN")
+				.antMatchers("/rpc/list").hasAuthority("ROLE_ADMIN")
+				.antMatchers("/rpc/add").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated();
 		//ログイン処理
 		http
@@ -51,7 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login?error")
 				.usernameParameter("mail")
 				.passwordParameter("password")
-				.defaultSuccessUrl("/rpc/traffic/list", true));
+				.successHandler((request, response, authentication) -> {
+		            if (authentication.getAuthorities().stream()
+		                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+		                response.sendRedirect("/rpc/list"); // adminの場合のリダイレクト先
+		            } else {
+		                response.sendRedirect("/rpc/traffic/list"); // その他の場合のデフォルトのリダイレクト先
+		            }
+		        })
+			);
+				//.defaultSuccessUrl("/rpc/traffic/list", true));
 
 		http
 			.logout()

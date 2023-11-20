@@ -1,25 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link th:href="@{/css/sanitize.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet" >
+<link th:href="@{/css/user/edit.css}" rel="stylesheet" type="text/css">
 <title>Insert title here</title>
 </head>
 <body>
-	<div>
-		<table>
-			<thead>
-				<tr>
-					<th>名前</th>
-					<th>メールアドレス</th>
-				</tr>
-			</thead>
-			<tbody th:each="item : ${list}" th:object="${item}">
-				<td><a th:href="@{/rpc/{id}(id=${item.id})}" th:text="*{name}"></a></td>
-	            <td><span th:text="*{mail}"></span></td>
-			</tbody>
-		</table>
-		<a href="/logout">ログアウト</a>
-	</div>
-
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    	<span class="navbar-brand mb-0 h1">交通費申請書</span>
+    	<div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	                <a class="nav-link text-light" href="/rpc/add">社員登録</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link text-light" href="/logout">ログアウト</a>
+	            </li>
+	        </ul>
+    	</div>
+    </nav>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+							<th>名前</th>
+                            <th>メールアドレス</th>
+                            <th>削除</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="item : ${list}" th:object="${item}">
+                        <tr>
+							<td><a th:href="@{/rpc/{id}(id=${item.id})}" th:text="*{name}"></a></td>
+							<td><span th:text="*{mail}"></span></td>
+							<td><span th:if="*{check==1}">未</span>
+								<span th:if="*{check==2}">済</span></td>
+							<td><form th:action="@{/rpc/detail/{id}(id=*{id})}" method="get">
+					                <button type="submit" class="btn btn-primary">編集</button>
+					            </form></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>	
 </body>
 </html>

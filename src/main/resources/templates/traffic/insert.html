@@ -1,18 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link th:href="@{/css/sanitize.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet" >
+<link th:href="@{/css/traffic/insert.css}" rel="stylesheet" type="text/css">
+<script th:src="@{/webjars/jquery/jquery.min.js}"defer></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"defer></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post" th:action="@{/rpc/traffic/insert}" th:object="${form}">
-		<input type="text" th:field="*{useday}" placeholder="yyyymmdd">
-		<input type="text" th:field="*{means}" placeholder="手段">
-		<input type="text" th:field="*{secter}" placeholder="区間">
-		<input type="text" th:field="*{road}" placeholder="往復片道">
-		<input type="text" th:field="*{cost}" placeholder="費用">
-		<input type="submit" value="登録">
-	</form>
-
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    	<span class="navbar-brand mb-0 h1">交通費申請書</span>
+    	<div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	                <a class="nav-link text-light" href="/rpc/traffic/list">交通費リスト</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link text-light" href="/logout">ログアウト</a>
+	            </li>
+	        </ul>
+    	</div>
+    </nav>
+    <div class="container mt-5">
+	    <form method="post" th:action="@{/rpc/traffic/insert}" th:object="${trafficInsertForm}">
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="useday" th:text="#{useday}"></label>
+	                <input type="text" th:field="*{useday}" class="form-control" placeholder="yyyymmdd" th:errorclass="is-invalid" />
+					<div class="invalid-feedback"th:errors="*{useday}"></div>
+                </div>
+    		</div>
+    		<div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="means" th:text="#{means}"></label>
+	                <input type="text" th:field="*{means}" class="form-control" placeholder="利用機関" th:errorclass="is-invalid" />
+					<div class="invalid-feedback"th:errors="*{means}"></div>
+	            </div>
+	        </div>
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="secter" th:text="#{secter}"></label>
+	                <input type="text" th:field="*{secter}" class="form-control" placeholder="利用機関" th:errorclass="is-invalid" />
+					<div class="invalid-feedback"th:errors="*{secter}"></div>
+	            </div>
+            </div>
+            <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label>往復片道</label>
+	                <div class="form-check">
+	                    <input type="radio" th:field="*{road}" class="form-check-input" id="roadOption1" value="1">
+	                    <label class="form-check-label" for="roadOption1">片道</label>
+	                </div>
+	                <div class="form-check">
+	                    <input type="radio" th:field="*{road}" class="form-check-input" id="roadOption2" value="2">
+	                    <label class="form-check-label" for="roadOption2">往復</label>
+	                </div>
+	                <div class="text-danger"th:if="${#fields.hasErrors('road')}"th:errors="*{road}"></div>
+	                
+	            </div>
+	        </div>
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="cost" th:text="#{cost}"></label>
+	                <input type="text" th:field="*{cost}" class="form-control" placeholder="利用機関" th:errorclass="is-invalid" />
+					<div class="invalid-feedback"th:errors="*{cost}"></div>
+	             </div>
+	        </div>
+	        <div class="form pl-5">
+    			<button class="btn btn-primary" type="submit">登録</button>
+    		</div>
+	    </form>
+	</div>
 </body>
 </html>

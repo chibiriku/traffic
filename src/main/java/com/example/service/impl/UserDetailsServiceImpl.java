@@ -28,6 +28,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if(loginUser == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
+		
+		if(loginUser.getDeleteDate() != null) {
+	        throw new UsernameNotFoundException("User has been deleted");
+	    }
 
 		String role = loginUser.getRole();
 
@@ -36,7 +40,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if("2".equals(role)) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		}
-
 
 		return new org.springframework.security.core.userdetails.User(
 	            loginUser.getMail(),

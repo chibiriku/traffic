@@ -5,8 +5,9 @@
 	<resultMap id="userWithTraffic" type="com.example.entity.Users">
 	    <id property="id" column="id" />
 	    <result property="name" column="name" />
+	    <result property="deleteDate" column="deleteDate"/>
 	    <!-- Usersエンティティの他のフィールドについても同様にマッピングを追加 -->
-	
+
 	    <!-- trafficListフィールドのカスタムマッピング -->
 	    <collection property="trafficList" ofType="com.example.entity.Traffic">
 	    	<id property="id" column="trafficid" />
@@ -19,7 +20,7 @@
 	    </collection>
 	</resultMap>
 
-	<!-- ユーザーの登録 -->
+	<!-- 社員の登録 -->
 	<insert id="userAdd">
 		insert into USERS
 			(name, password, mail, createDate)
@@ -27,9 +28,26 @@
 			(#{name}, #{password}, #{mail}, CURRENT_TIMESTAMP)
 	</insert>
 	
+	<!-- 社員一人取得 -->
+	<select id="userOne" parameterType="int" resultType="com.example.entity.Users">
+		SELECT * FROM USERS WHERE id = #{id};
+	</select>
+	
+	<!-- 社員情報更新 -->
+	<update id="userUpdate">
+		UPDATE USERS 
+		SET name = #{name}, mail=#{mail}, updateDate = CURRENT_TIMESTAMP
+		WHERE id = #{id}
+	</update>
+	
+	<!--社員情報の論理的削除-->
+	<update id="userDelete">
+        UPDATE USERS SET deleteDate = CURRENT_TIMESTAMP WHERE id = #{id}
+    </update>
+	
 	<!-- 社員一覧 -->
 	<select id="userList" resultType="com.example.entity.Users">
-		SELECT * FROM USERS
+		SELECT * FROM USERS;
 	</select>
 	
 	<!-- ユーザーごとの交通費 -->
@@ -42,7 +60,7 @@
 	</select>
 	
 	<select id="findLoginUser" resultType="com.example.entity.Users">
-		SELECT * FROM USERS WHERE mail = #{mail}
+		SELECT * FROM USERS WHERE mail = #{mail} AND deleteDate IS NULL;
 	</select>
 	
 	<!-- 今月の交通費一覧 -->

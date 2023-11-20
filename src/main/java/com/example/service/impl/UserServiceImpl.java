@@ -26,8 +26,25 @@ public class UserServiceImpl implements UserService {
 	public void userAdd(UserAddForm form) {
 		String rawPassword = form.getPassword();
 		form.setPassword(encoder.encode(rawPassword));
-
 		userMapper.userAdd(form);
+	}
+	
+	//社員一人の情報
+	@Override
+	public Users userOne(int id) {
+		return userMapper.userOne(id);
+	}
+	
+	@Override
+	public void userUpdate(Long id,
+			String name,
+			String mail) {
+		userMapper.userUpdate(id, name, mail);
+	}
+	
+	@Override
+	public void userDelete(Long id) {
+		userMapper.userDelete(id);
 	}
 
 	@Override
@@ -71,5 +88,4 @@ public class UserServiceImpl implements UserService {
 	public List<Users> monthlyTrafficList(int id,int year,int month) {
 		return userMapper.monthlyTrafficList(id ,year, month);
 	}
-
 }

@@ -1,21 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link th:href="@{/css/sanitize.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet" >
 <title>Insert title here</title>
 </head>
 <body>
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    	<span class="navbar-brand mb-0 h1">交通費申請書</span>
+    	<div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	                <a class="nav-link text-light" href="/rpc/list">社員一覧</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link text-light" href="/logout">ログアウト</a>
+	            </li>
+	        </ul>
+    	</div>
+    </nav>
 	<table>
-			<thead>
-				<tr>
-					<th>ゆーざーID</th>
-					<th>手段</th>
-				</tr>
-			</thead>
-			<tbody th:each="item : ${tlist}" th:object="${item}">
-				<td><span th:text="*{userid}"></span></td>
-	            <td><span th:text="*{means}"></span></td>
-			</tbody>
-		</table>
+		<thead>
+			<tr>
+				<th>ゆーざーID</th>
+				<th>手段</th>
+			</tr>
+		</thead>
+		<tbody th:each="item : ${tlist}" th:object="${item}">
+			<td><span th:text="*{userid}"></span></td>
+            <td><span th:text="*{means}"></span></td>
+		</tbody>
+	</table>
 </body>
 </html>

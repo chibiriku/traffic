@@ -22,6 +22,12 @@ public interface UserService {
 	List <Users> currentTrafficList(Long id);
 
 	List <Users> monthlyTrafficList(int id, int year,int manth);
-
-
+	
+	Users userOne(int id);
+	
+	void userUpdate(Long id,
+			String name,
+			String mail);
+	
+	void userDelete(Long id);
 }

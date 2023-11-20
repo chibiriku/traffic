@@ -1,20 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link th:href="@{/css/sanitize.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet" >
+<link th:href="@{/css/traffic/detail.css}" rel="stylesheet" type="text/css">
 <title>Insert title here</title>
 </head>
 <body>
-	<form th:method="post" th:action="@{/rpc/traffic/detail}" th:object="${form}">
-		<input type="hidden" th:field="*{id}">
-		<input type="text" th:field="*{useday}">
-		<input type="text" th:field="*{means}">
-		<input type="text" th:field="*{secter}">
-		<input type="text" th:field="*{road}">
-		<input type="text" th:field="*{cost}">
-		<button type="submit" name="update">更新</button>
-		<button type="submit" name="delete">削除</button>
-	</form>
-
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    	<span class="navbar-brand mb-0 h1">交通費申請書</span>
+    	<div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	                <a class="nav-link text-light" href="/rpc/traffic/list">交通費リスト</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link text-light" href="/logout">ログアウト</a>
+	            </li>
+	        </ul>
+    	</div>
+    </nav>
+    <div class="container mt-5">
+	    <form method="post" th:action="@{/rpc/traffic/detail}" th:object="${form}" class="needs-validation">
+			<input type="hidden" th:field="*{id}"/>
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="useday">日付</label>
+	                <input type="text" th:field="*{useday}" class="form-control" placeholder="yyyymmdd">
+                </div>
+    		</div>
+    		<div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="means">利用機関</label>
+	                <input type="text" th:field="*{means}" class="form-control" placeholder="手段">
+	            </div>
+	        </div>
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="secter">利用区間</label>
+	                <input type="text" th:field="*{secter}" class="form-control" placeholder="区間" >
+	            </div>
+            </div>
+            <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label>往復片道</label>
+	                <div class="form-check">
+	                    <input type="radio" th:field="*{road}" class="form-check-input" id="roadOption1" value="1">
+	                    <label class="form-check-label" for="roadOption1">片道</label>
+	                </div>
+	                <div class="form-check">
+	                    <input type="radio" th:field="*{road}" class="form-check-input" id="roadOption2" value="2">
+	                    <label class="form-check-label" for="roadOption2">往復</label>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="cost">費用</label>
+	                <input type="text" th:field="*{cost}" class="form-control" placeholder="費用">
+	            </div>
+	        </div>
+	        <div class="form pl-5">
+    			<button class="btn btn-primary" type="submit" name="update">登録</button>
+    			<button class="btn btn-danger ml-2" type="submit" name="delete">削除</button>
+    		</div>
+	    </form>
+	</div>
 </body>
 </html>

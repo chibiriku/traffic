@@ -15,6 +15,7 @@ public class Users {
 	private Date createDate;
 	private Date updateDate;
 	private Date deleteDate;
+	private Integer check;
 
 	private List<Traffic> trafficList;
 }

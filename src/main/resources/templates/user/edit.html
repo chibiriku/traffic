@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link th:href="@{/css/sanitize.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet" >
+<link th:href="@{/css/user/edit.css}" rel="stylesheet" type="text/css">
+<script th:src="@{/webjars/jquery/jquery.min.js}"defer></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"defer></script>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    	<span class="navbar-brand mb-0 h1">交通費申請書</span>
+    	<div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	                <a class="nav-link text-light" href="/rpc/list">社員一覧</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link text-light" href="/logout">ログアウト</a>
+	            </li>
+	        </ul>
+    	</div>
+    </nav>
+    <div class="container mt-5">
+	    <form method="post" th:action="@{/rpc/detail}" th:object="${form}" class="needs-validation">
+			<input type="hidden" th:field="*{id}"/>
+	        <div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="name" th:text="#{name}"></label>
+	                <input type="text" th:field="*{name}" class="form-control">
+                </div>
+    		</div>
+    		<div class="form">
+	            <div class="col-md-8 mb-3 pl-5">
+	                <label for="mail" th:text="#{mail}"></label>
+	                <input type="text" th:field="*{mail}" class="form-control">
+	            </div>
+	        </div>
+	        <div class="form pl-5">
+    			<button class="btn btn-primary" type="submit" name="update">更新</button>
+    			<button class="btn btn-danger ml-2" type="submit" name="delete">削除</button>
+    		</div>
+	    </form>
+	</div>
+</body>
+</html>
